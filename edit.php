@@ -162,6 +162,9 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         <label for="commentary">Commentary</label>
         <input type="text" name="commentary" value="<?= $result['commentary'] ?>" required>
 
+        <input type="hidden" name="id" value="<?= $result['id'] ?>">
+        <input type="submit" value="EDIT"></input>
+
     </form>
 </body>
 
