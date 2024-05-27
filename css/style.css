@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+body > a {
+  color: black;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  border-radius: 1rem;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: burlywood;
+  transition: 0.5s;
+}
+
+body > a:hover {
+  transform: scale(1);
+  background-color: rgb(201, 167, 122);
+}
+
+table {
+  border: 5px solid rgba(14, 136, 173, 0.636);
+  background-color: rgba(0, 255, 255, 0.044);
+  border-radius: 1rem;
+  text-align: center;
+  width: 60%;
+}
+
+h1 {
+  text-align: center;
+  color: burlywood;
+  padding: 5px;
+}
+
+th {
+  background: burlywood;
+}
+
+td {
+  background-color: rgba(0, 255, 255, 0.044);
+}
+
+th,
+td {
+  padding: 10px;
+  border-radius: 0.5rem;
+  border: 2px solid rgba(0, 128, 0, 0.597);
+  margin: auto;
+}
+
+td a {
+  padding: 5px;
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+  justify-content: center;
+  width: 100px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+}
+
+.container a {
+  color: black;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  border-radius: 1rem;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: burlywood;
+  transition: 0.5s;
+  margin-top: 10px;
+}
+
+p {
+  font-weight: bold;
+}
+
+/* FORM */
+
+.form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form input,
+.form select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form input:focus,
+.form select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.form input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
