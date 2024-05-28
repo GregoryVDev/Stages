@@ -60,15 +60,16 @@ if ($_POST) {
 
         require_once("close.php");
 
+        $_SESSION['name_confirm'] = "confirm";
+        $_SESSION['name_add'] = $name;
+
+
         header("Location: index.php");
         exit();
     }
 }
 ?>
 
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,14 +91,14 @@ if ($_POST) {
 
         <select name="status" id="action-select" required>
             <option value="">--Please choose an option--</option>
-            <option value="applied">Applied</option>
-            <option value="not-conrrespond">Does not correspond</option>
-            <option value="interview">Job interview</option>
-            <option value="offer">Job offer</option>
-            <option value="refusal">Refusal</option>
-            <option value="hiring">Hiring</option>
-            <option value="no-answer">No answer</option>
-            <option value="relaunched">Relaunched</option>
+            <option value="Applied">Applied</option>
+            <option value="Does not correspond">Does not correspond</option>
+            <option value="Interview">Job interview</option>
+            <option value="Offer">Job offer</option>
+            <option value="Refusal">Refusal</option>
+            <option value="Hiring">Hiring</option>
+            <option value="No answer">No answer</option>
+            <option value="Relaunched">Relaunched</option>
         </select>
 
         <label for="name">Name</label>
@@ -112,23 +113,23 @@ if ($_POST) {
         <label for="type">Type</label>
         <select name="type" id="type-select" required>
             <option value="">--Please choose an option--</option>
-            <option value="spontaneous">Spontaneous</option>
-            <option value="response-offer">Response to an offer</option>
-            <option value="recommendation">Recommendation</option>
-            <option value="solicitation">Direct solicitation</option>
+            <option value="Spontaneous">Spontaneous</option>
+            <option value="Response-offer">Response to an offer</option>
+            <option value="Recommendation">Recommendation</option>
+            <option value="Solicitation">Direct solicitation</option>
         </select>
 
 
         <label for="method">Method</label>
         <select name="method" id="method" required>
             <option value="">--Please choose an option--</option>
-            <option value="person">In person</option>
-            <option value="email">Email</option>
-            <option value="linkedln">Linkedln</option>
-            <option value="job-board">Job Board</option>
-            <option value="webside">Webside</option>
-            <option value="recommendation">Recommendation</option>
-            <option value="solicitation">Direct Solicitation</option>
+            <option value="Person">In person</option>
+            <option value="Email">Email</option>
+            <option value="Linkedln">Linkedln</option>
+            <option value="Job-board">Job Board</option>
+            <option value="Webside">Webside</option>
+            <option value="Recommendation">Recommendation</option>
+            <option value="Solicitation">Direct Solicitation</option>
 
         </select>
 
@@ -138,10 +139,10 @@ if ($_POST) {
         <label for="contrat">Contrat</label>
         <select name="contrat" id="contrat" required>
             <option value="">--Please choose an option--</option>
-            <option value="internship">Internship</option>
-            <option value="fixed-term">Fixed-term contrat</option>
-            <option value="indefinite-term">Indefinite-term contrat</option>
-            <option value="freelance">Freelance</option>
+            <option value="Internship">Internship</option>
+            <option value="Fixed-term">Fixed-term contrat</option>
+            <option value="Indefinite-term">Indefinite-term contrat</option>
+            <option value="Freelance">Freelance</option>
         </select>
 
         <label for="email">Email</label>

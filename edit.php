@@ -38,7 +38,7 @@ if ($_POST) {
             $dunning_date = null;
         }
 
-        $sql = "UPDATE stage SET status=:status, name=:name, apply=:apply, type=:type, method=:method, position=:position, contrat=:contrat, email=:email, commentary=:commentary WHERE id=:id";
+        $sql = "UPDATE stage SET status=:status, name=:name, apply=:apply, dunning_date=:dunning_date, type=:type, method=:method, position=:position, contrat=:contrat, email=:email, commentary=:commentary WHERE id=:id";
         $query = $db->prepare($sql);
 
         $query->bindValue(":id", $id);
@@ -57,6 +57,8 @@ if ($_POST) {
 
         require_once("close.php");
 
+        $_SESSION["name_edited"] = $name;
+
         header("Location: index.php");
     }
 }
@@ -74,11 +76,12 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $query->execute();
 
     $result = $query->fetch();
+
+    $_SESSION['update_confirm'] = "valid";
+    $_SESSION['name_stage'] = $result[2];
 } else {
     header("Location: index.php");
 }
-
-
 
 ?>
 
@@ -98,18 +101,18 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
     <form method="post" class="form">
 
-        <label for="status" value="<?= $result['status'] ?>">Status</label>
+        <label for="status">Status</label>
 
         <select name="status" id="action-select" required>
             <option value="">--Please choose an option--</option>
-            <option value="applied">Applied</option>
-            <option value="not-conrrespond">Does not correspond</option>
-            <option value="interview">Job interview</option>
-            <option value="offer">Job offer</option>
-            <option value="refusal">Refusal</option>
-            <option value="hiring">Hiring</option>
-            <option value="no-answer">No answer</option>
-            <option value="relaunched">Relaunched</option>
+            <option value="Applied" <?= $result['status'] == 'Applied' ? 'selected' : '' ?>>Applied</option>
+            <option value="Does not correspond" <?= $result['status'] == 'Does not correspond' ? 'selected' : '' ?>>Does not correspond</option>
+            <option value="Interview" <?= $result['status'] == 'Interview' ? 'selected' : '' ?>>Job interview</option>
+            <option value="Offer" <?= $result['status'] == 'Offer' ? 'selected' : '' ?>>Job offer</option>
+            <option value="Refusal" <?= $result['status'] == 'Refusal' ? 'selected' : '' ?>>Refusal</option>
+            <option value="Hiring" <?= $result['status'] == 'Hiring' ? 'selected' : '' ?>>Hiring</option>
+            <option value="No answer" <?= $result['status'] == 'No answer' ? 'selected' : '' ?>>No answer</option>
+            <option value="Relaunched" <?= $result['status'] == 'Relaunched' ? 'selected' : '' ?>>Relaunched</option>
         </select>
 
         <label for="name">Name</label>
@@ -124,23 +127,23 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         <label for="type" value="<?= $result['type'] ?>">Type</label>
         <select name="type" id="type-select" required>
             <option value="">--Please choose an option--</option>
-            <option value="spontaneous">Spontaneous</option>
-            <option value="response-offer">Response to an offer</option>
-            <option value="recommendation">Recommendation</option>
-            <option value="solicitation">Direct solicitation</option>
+            <option value="Spontaneous" <?= $result['type'] == 'Spontaneous' ? 'selected' : '' ?>>Spontaneous</option>
+            <option value="Response-offer" <?= $result['type'] == 'Response-offer' ? 'selected' : '' ?>>Response to an offer</option>
+            <option value="Recommendation" <?= $result['type'] == 'Recommendation' ? 'selected' : '' ?>>Recommendation</option>
+            <option value="Solicitation" <?= $result['type'] == 'Solicitation' ? 'selected' : '' ?>>Direct solicitation</option>
         </select>
 
 
         <label for="method" value="<?= $result['method'] ?>">Method</label>
         <select name="method" id="method" required>
             <option value="">--Please choose an option--</option>
-            <option value="person">In person</option>
-            <option value="email">Email</option>
-            <option value="linkedln">Linkedln</option>
-            <option value="job-board">Job Board</option>
-            <option value="webside">Webside</option>
-            <option value="recommendation">Recommendation</option>
-            <option value="solicitation">Direct Solicitation</option>
+            <option value="Person" <?= $result['method'] == 'Person' ? 'selected' : '' ?>>In person</option>
+            <option value="Email" <?= $result['method'] == 'Email' ? 'selected' : '' ?>>Email</option>
+            <option value="lLinkedln" <?= $result['method'] == 'Linkedln' ? 'selected' : '' ?>>Linkedln</option>
+            <option value="Job-board" <?= $result['method'] == 'Job-board' ? 'selected' : '' ?>>Job Board</option>
+            <option value="Webside" <?= $result['method'] == 'Webside' ? 'selected' : '' ?>>Webside</option>
+            <option value="Recommendation" <?= $result['method'] == 'Recommendation' ? 'selected' : '' ?>>Recommendation</option>
+            <option value="Solicitation" <?= $result['method'] == 'Solicitation' ? 'selected' : '' ?>>Direct Solicitation</option>
 
         </select>
 
@@ -150,10 +153,10 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         <label for="contrat" value="<?= $result['contrat'] ?>">Contrat</label>
         <select name="contrat" id="contrat" required>
             <option value="">--Please choose an option--</option>
-            <option value="internship">Internship</option>
-            <option value="fixed-term">Fixed-term contrat</option>
-            <option value="indefinite-term">Indefinite-term contrat</option>
-            <option value="freelance">Freelance</option>
+            <option value="Internship" <?= $result['contrat'] == 'Internship' ? 'selected' : '' ?>>Internship</option>
+            <option value="Fixed-term" <?= $result['contrat'] == 'Fixed-term' ? 'selected' : '' ?>>Fixed-term contrat</option>
+            <option value="Indefinite-term" <?= $result['contrat'] == 'Indefinite-term' ? 'selected' : '' ?>>Indefinite-term contrat</option>
+            <option value="Freelance" <?= $result['contrat'] == 'Freelance' ? 'selected' : '' ?>>Freelance</option>
         </select>
 
         <label for="email">Email</label>
@@ -164,8 +167,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
         <input type="hidden" name="id" value="<?= $result['id'] ?>">
         <input type="submit" value="EDIT"></input>
-
     </form>
+
 </body>
 
 </html>

@@ -26,6 +26,31 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
 
+    <?php if (isset($_SESSION['delete_confirm']) && $_SESSION['delete_confirm'] === true) : ?>
+        <div>
+            <p><?= $_SESSION['stage_name'] ?> has been successfully deleted.</p>
+        </div>
+        <?php unset($_SESSION["delete_confirm"]); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION["update_confirm"]) && $_SESSION["update_confirm"] === "valid" && isset($_SESSION["name_stage"])) : ?>
+        <div>
+            <p><?= $_SESSION['name_stage'] ?> has been modified by <?= ($_SESSION['name_edited']) ?>.</p>
+        </div>
+        <?php unset($_SESSION['update_confirm']);
+        unset($_SESSION['name_stage']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['name_confirm']) && $_SESSION['name_confirm'] === "confirm" && isset($_SESSION["name_add"])) : ?>
+        <div>
+            <p><?= ($_SESSION['name_add']) ?> has been added.</p>
+        </div>
+        <?php unset($_SESSION['name_confirm']);
+        unset($_SESSION['name_add']); ?>
+    <?php endif; ?>
+
+
+
     <h1>Internship</h1>
 
     <table>
