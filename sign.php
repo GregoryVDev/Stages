@@ -88,8 +88,10 @@ if (!empty($_POST)) {
             <label for="pass">Password</label>
             <input type="password" name="pass" id="pass">
         </div>
-        <button type="submit">Sign up</button>
+        <button type="submit">SIGN UP</button>
+        <button><a href="connexion.php" style="text-decoration: none">SIGN IN</a></button>
     </form>
+
 </body>
 
 </html>

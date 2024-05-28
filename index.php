@@ -10,7 +10,15 @@ $query->execute();
 
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
+unset($_SESSION["user"]);
+
+
+
+
 ?>
+
+
+
 
 
 
@@ -49,9 +57,14 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
         unset($_SESSION['name_add']); ?>
     <?php endif; ?>
 
-
+    <div class="buttons-container">
+        <button><a href="sign.php">SIGN UP</a></button>
+        <button><a href="connexion.php">SIGN IN</a></button>
+    </div>
 
     <h1>Internship</h1>
+
+
 
     <table>
         <thead>

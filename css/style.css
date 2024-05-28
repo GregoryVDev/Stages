@@ -92,6 +92,10 @@ p {
   font-weight: bold;
 }
 
+.buttons-container {
+  display: flex;
+}
+
 /* FORM */
 
 .form {
