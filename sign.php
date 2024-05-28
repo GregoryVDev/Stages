@@ -33,9 +33,12 @@ if (!empty($_POST)) {
 
         $query->bindValue(":pseudo", $pseudo);
         $query->bindValue(":email", $_POST["email"]);
-        $query->bindValue(":pass", $pass);
 
         $query->execute();
+
+
+        // On récupère l'id du nouvel utilisateur
+        $id = $db->lastInsertId();
 
         // On connectera l'utilisateur
 
@@ -44,10 +47,10 @@ if (!empty($_POST)) {
 
         // On stocke dans $_SESSION les informations de l'utilisateur
         $_SESSION['user'] = [
-            "id" => $user['id'],
-            "pseudo" => $user['username'],
-            "email" => $user['email'],
-            "roles" => $user['roles']
+            "id" => $id,
+            "pseudo" => $pseudo,
+            "email" => $_POST['email'],
+            "roles" => ['ROLE_USER']
         ];
 
         // Rediriger vers la page index (exemple)
