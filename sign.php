@@ -1,8 +1,13 @@
 <?php
 
+// Fonction de validation des entrées
+function validateEmail($email)
+{
+    return !filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
 // On vérifie si le formulaire a été envoyé
 if (!empty($_POST)) {
-    // var_dump($_POST);
     // Le formulaire a été envoyé
     // On vérifie que tous les champs requis sont remplis
     if (
@@ -12,34 +17,30 @@ if (!empty($_POST)) {
         // On récupère les données en les protégeant
         $pseudo = strip_tags($_POST['nickname']);
 
-        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            die("L'adresse email est incomplet");
+        if (!validateEmail($_POST["email"])) {
+            die("Invalid email");
         }
-
 
         // On va hasher le mot de passe
         $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
 
-        // die($pass);
-
         // On enregistre la bdd
         require_once("connect.php");
 
-        $sql = "INSERT INTO users (username, email, pass, roles) VALUES (:pseudo, :email, '$pass', '[\"ROLE_USER\"]')";
+        $sql = "INSERT INTO users (username, email, pass, roles) VALUES (:pseudo, :email, :pass, '[\"ROLE_USER\"]')";
 
         $query = $db->prepare($sql);
 
         $query->bindValue(":pseudo", $pseudo);
         $query->bindValue(":email", $_POST["email"]);
+        $query->bindValue(":pass", $pass);
 
         $query->execute();
     } else {
-        // Formulaire pas incomplet
-        die("Le formulaire est incomplet");
+        // Formulaire incomplet
+        die("The form is incomplete");
     }
 }
-
-
 
 ?>
 
