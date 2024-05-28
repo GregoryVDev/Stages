@@ -42,7 +42,10 @@ if ($_POST) {
             $dunning_date = null;
         }
 
-        $sql = "INSERT INTO stage (status ,name, apply, dunning_date, type, method, position, contrat, email, commentary) VALUES (:status, :name, :apply, :dunning_date, :type, :method, :position, :contrat, :email, :commentary)";
+        // On récupère l'id de l'utilisateur connecté
+        $user_id = $_SESSION['user']["id"];
+
+        $sql = "INSERT INTO stage (status ,name, apply, dunning_date, type, method, position, contrat, email, commentary, user_id) VALUES (:status, :name, :apply, :dunning_date, :type, :method, :position, :contrat, :email, :commentary, :user_id)";
         $query = $db->prepare($sql);
 
         $query->bindValue(":status", $status);
@@ -55,6 +58,7 @@ if ($_POST) {
         $query->bindValue(":contrat", $contrat);
         $query->bindValue(":email", $email);
         $query->bindValue(":commentary", $commentary);
+        $query->bindValue(":user_id", $user_id);
 
         $query->execute();
 

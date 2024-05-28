@@ -1,5 +1,8 @@
 <?php
 
+// On démarre la session PHP
+session_start();
+
 function validateEmail($email)
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
@@ -42,8 +45,7 @@ if (!empty($_POST)) {
 
         // L'utilisateur et le mot de passe sont corrects
         // On va pouvoir "connecter" l'utilisateur
-        // On démarre la session PHP
-        session_start();
+
 
         // On stocke dans $_SESSION les informations de l'utilisateur
         $_SESSION['user'] = [
@@ -86,7 +88,7 @@ if (!empty($_POST)) {
             <input type="password" name="pass" id="pass">
         </div>
         <button type="submit">SIGN IN</button>
-        <button><a href="sign.php" style="text-decoration: none">SIGN UP</a></button>
+
     </form>
 
 

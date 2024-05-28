@@ -2,6 +2,11 @@
 
 session_start();
 
+if (!isset($_SESSION['user'])) {
+    header("Location: connexion.php");
+    exit();
+}
+
 if ($_POST) {
     if (
         isset($_POST['status']) &&
@@ -27,6 +32,8 @@ if ($_POST) {
         $email = strip_tags($_POST['email']);
         $commentary = strip_tags($_POST['commentary']);
 
+        $user_id = $_SESSION['user']['id'];
+
         if (!empty($_POST['dunning_date'])) {
             $timestamp = strtotime($_POST['dunning_date']);
             if ($timestamp !== false) {
@@ -38,7 +45,7 @@ if ($_POST) {
             $dunning_date = null;
         }
 
-        $sql = "UPDATE stage SET status=:status, name=:name, apply=:apply, dunning_date=:dunning_date, type=:type, method=:method, position=:position, contrat=:contrat, email=:email, commentary=:commentary WHERE id=:id";
+        $sql = "UPDATE stage SET status=:status, name=:name, apply=:apply, dunning_date=:dunning_date, type=:type, method=:method, position=:position, contrat=:contrat, email=:email, commentary=:commentary WHERE id=:id AND user_id=:user_id";
         $query = $db->prepare($sql);
 
         $query->bindValue(":id", $id);
@@ -52,35 +59,48 @@ if ($_POST) {
         $query->bindValue(":contrat", $contrat);
         $query->bindValue(":email", $email);
         $query->bindValue(":commentary", $commentary);
+        $query->bindValue(':user_id', $user_id);
 
-        $query->execute();
+        $result = $query->execute();
 
         require_once("close.php");
 
-        $_SESSION["name_edited"] = $name;
-
-        header("Location: index.php");
+        if ($result) {
+            $_SESSION["name_edited"] = $name;
+            header("Location: index.php");
+            exit();
+        } else {
+            echo "Update failed.";
+        }
     }
 }
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {
-
     require_once("connect.php");
 
     $id = strip_tags($_GET['id']);
+    $user_id = $_SESSION['user']['id'];
 
-    $sql = "SELECT * FROM stage WHERE id=:id";
+    $sql = "SELECT * FROM stage WHERE id = :id AND user_id = :user_id";
     $query = $db->prepare($sql);
 
     $query->bindValue(':id', $id);
+    $query->bindValue(':user_id', $user_id);
+
     $query->execute();
 
     $result = $query->fetch();
 
+    if (!$result) {
+        header("Location: index.php");
+        exit();
+    }
+
     $_SESSION['update_confirm'] = "valid";
-    $_SESSION['name_stage'] = $result[2];
+    $_SESSION['name_stage'] = $result['name'];
 } else {
     header("Location: index.php");
+    exit();
 }
 
 ?>

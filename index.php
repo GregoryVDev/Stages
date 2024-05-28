@@ -3,24 +3,31 @@
 session_start();
 require_once("connect.php");
 
-$sql = "SELECT * FROM stage";
+// On vérifie si l'utilisateur est connecté
+
+if (!isset($_SESSION["user"])) {
+    header("Location: connexion.php");
+    exit;
+}
+
+// On récupère l'ID de l'utilisateur si il est connecté
+
+$user_id = $_SESSION["user"]["id"];
+
+// On séléctionne uniquement les stages de l'utilisateur connecté
+
+$sql = "SELECT * FROM stage WHERE user_id = :user_id";
 
 $query = $db->prepare($sql);
+
+$query->bindParam(":user_id", $user_id);
+
 $query->execute();
 
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-unset($_SESSION["user"]);
-
-
-
 
 ?>
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,11 +65,19 @@ unset($_SESSION["user"]);
     <?php endif; ?>
 
     <div class="buttons-container">
-        <button><a href="sign.php">SIGN UP</a></button>
-        <button><a href="connexion.php">SIGN IN</a></button>
+        <?php if (!isset($_SESSION["user"])) : ?>
+            <button><a href="sign.php">SIGN UP</a></button>
+            <button><a href="connexion.php">SIGN IN</a></button>
+        <?php else : ?>
+            <button><a href="disconnect.php">LOGOUT</a></button>
+        <?php endif; ?>
     </div>
 
     <h1>Internship</h1>
+
+    <?php if (isset($_SESSION['user'])) : ?>
+        <h2>Connected profile <?= htmlspecialchars($_SESSION['user']['pseudo']) ?></h2>
+    <?php endif; ?>
 
 
 
@@ -80,29 +95,38 @@ unset($_SESSION["user"]);
             <th>Commentary</th>
             <th>Action</th>
         </thead>
-        <?php foreach ($result as $stage) : ?>
-            <tbody>
-                <tr>
-                    <td><?= ($stage['status']) ?></td>
-                    <td><?= ($stage['name']) ?></td>
-                    <td><?= ($stage['apply']) ?></td>
-                    <td><?= ($stage['dunning_date']) ?></td>
-                    <td><?= ($stage['type']) ?></td>
-                    <td><?= ($stage['method']) ?></td>
-                    <td><?= ($stage['position']) ?></td>
-                    <td><?= ($stage['contrat']) ?></td>
-                    <td><?= ($stage['email']) ?></td>
-                    <td><?= ($stage['commentary']) ?></td>
-                    <td>
-                        <a href="edit.php?id=<?= $stage["id"] ?>">Edit</a>
-                        <a href="details.php?id=<?= $stage["id"] ?>">Profil</a>
-                        <a href="delete.php?id=<?= $stage["id"] ?>">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        <?php endforeach; ?>
+        <?php if (isset($_SESSION['user'])) : // Ajout de la condition 
+        ?>
+            <?php foreach ($result as $stage) : ?>
+                <tbody>
+                    <tr>
+                        <td><?= ($stage['status']) ?></td>
+                        <td><?= ($stage['name']) ?></td>
+                        <td><?= ($stage['apply']) ?></td>
+                        <td><?= ($stage['dunning_date']) ?></td>
+                        <td><?= ($stage['type']) ?></td>
+                        <td><?= ($stage['method']) ?></td>
+                        <td><?= ($stage['position']) ?></td>
+                        <td><?= ($stage['contrat']) ?></td>
+                        <td><?= ($stage['email']) ?></td>
+                        <td><?= ($stage['commentary']) ?></td>
+                        <td>
+                            <a href="edit.php?id=<?= $stage["id"] ?>">Edit</a>
+                            <a href="details.php?id=<?= $stage["id"] ?>">Profil</a>
+                            <a href="delete.php?id=<?= $stage["id"] ?>">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            <?php endforeach; ?>
+        <?php endif; // Fin de la condition 
+        ?>
+
     </table>
-    <a href="add.php">Add</a>
+    <?php if (isset($_SESSION['user'])) : // Ajout de la condition 
+    ?>
+        <a href="add.php">Add</a>
+    <?php endif; // Fin de la condition 
+    ?>
 
 </body>
 

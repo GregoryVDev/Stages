@@ -1,5 +1,10 @@
 <?php
 
+// On connectera l'utilisateur
+
+// On démarre la session PHP
+session_start();
+
 // Fonction de validation des entrées
 function validateEmail($email)
 {
@@ -39,11 +44,6 @@ if (!empty($_POST)) {
 
         // On récupère l'id du nouvel utilisateur
         $id = $db->lastInsertId();
-
-        // On connectera l'utilisateur
-
-        // On démarre la session PHP
-        session_start();
 
         // On stocke dans $_SESSION les informations de l'utilisateur
         $_SESSION['user'] = [
@@ -89,7 +89,7 @@ if (!empty($_POST)) {
             <input type="password" name="pass" id="pass">
         </div>
         <button type="submit">SIGN UP</button>
-        <button><a href="connexion.php" style="text-decoration: none">SIGN IN</a></button>
+
     </form>
 
 </body>

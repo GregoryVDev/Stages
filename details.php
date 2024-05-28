@@ -9,10 +9,14 @@ if (
     require_once("connect.php");
 
     $id = strip_tags($_GET['id']);
-    $sql = "SELECT * FROM stage WHERE id=:id";
+
+    $user_id = $_SESSION['user']['id'];
+
+    $sql = "SELECT * FROM stage WHERE id=:id AND user_id=:user_id";
     $query = $db->prepare($sql);
 
     $query->bindValue(":id", $id,);
+    $query->bindValue(":user_id", $user_id);
 
     $query->execute();
 
