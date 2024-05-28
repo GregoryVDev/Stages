@@ -36,6 +36,22 @@ if (!empty($_POST)) {
         $query->bindValue(":pass", $pass);
 
         $query->execute();
+
+        // On connectera l'utilisateur
+
+        // On démarre la session PHP
+        session_start();
+
+        // On stocke dans $_SESSION les informations de l'utilisateur
+        $_SESSION['user'] = [
+            "id" => $user['id'],
+            "pseudo" => $user['username'],
+            "email" => $user['email'],
+            "roles" => $user['roles']
+        ];
+
+        // Rediriger vers la page index (exemple)
+        header("Location: index.php");
     } else {
         // Formulaire incomplet
         die("The form is incomplete");
