@@ -8,7 +8,7 @@ session_start();
 // Fonction de validation des entrées
 function validateEmail($email)
 {
-    return !filter_var($email, FILTER_VALIDATE_EMAIL);
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
 // On vérifie si le formulaire a été envoyé
@@ -89,7 +89,7 @@ if (!empty($_POST)) {
             <input type="password" name="pass" id="pass">
         </div>
         <button type="submit">SIGN UP</button>
-
+        <button><a href="connexion.php">SIGN IN</a></button>
     </form>
 
 </body>

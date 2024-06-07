@@ -88,7 +88,7 @@ if (!empty($_POST)) {
             <input type="password" name="pass" id="pass">
         </div>
         <button type="submit">SIGN IN</button>
-
+        <button><a href="sign.php">SIGN UP</a></button>
     </form>
 
 

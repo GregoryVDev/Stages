@@ -50,7 +50,7 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     <?php if (isset($_SESSION["update_confirm"]) && $_SESSION["update_confirm"] === "valid" && isset($_SESSION["name_stage"])) : ?>
         <div>
-            <p><?= $_SESSION['name_stage'] ?> has been modified by <?= ($_SESSION['name_edited']) ?>.</p>
+            <p><?= $_SESSION['name_stage'] ?> has been modified.</p>
         </div>
         <?php unset($_SESSION['update_confirm']);
         unset($_SESSION['name_stage']); ?>
