@@ -1,10 +1,5 @@
 <?php
 
-// On connectera l'utilisateur
-
-// On démarre la session PHP
-session_start();
-
 // Fonction de validation des entrées
 function validateEmail($email)
 {
@@ -32,7 +27,7 @@ if (!empty($_POST)) {
         // On enregistre la bdd
         require_once("connect.php");
 
-        $sql = "INSERT INTO users (username, email, pass, roles) VALUES (:pseudo, :email, :pass, '[\"ROLE_USER\"]')";
+        $sql = "INSERT INTO users (username, email, pass, roles) VALUES (:pseudo, :email, '$pass', '[\"ROLE_USER\"]')";
 
         $query = $db->prepare($sql);
 
@@ -40,7 +35,6 @@ if (!empty($_POST)) {
         $query->bindValue(":email", $_POST["email"]);
 
         $query->execute();
-
 
         // On récupère l'id du nouvel utilisateur
         $id = $db->lastInsertId();
@@ -60,6 +54,7 @@ if (!empty($_POST)) {
         die("The form is incomplete");
     }
 }
+
 
 ?>
 

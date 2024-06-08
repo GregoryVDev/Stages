@@ -59,7 +59,7 @@ if (!empty($_POST)) {
         header("Location: index.php");
     } else {
         // Formulaire incomplet
-        die("Le formulaire est incomplet");
+        die("The form is incomplete");
     }
 }
 
